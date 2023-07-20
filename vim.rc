@@ -1,0 +1,234 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+"Spell Checker
+set term=ansi
+"
+map <F5> :setlocal spell! spelllang=en_us<CR>
+imap <Del> DELETE
+map <Esc>[3~    <Del>
+nmap <Ctrl-V><Del> x
+imap <Ctrl-V><Del> <Ctrl-V><Esc>lxi
+
+"syn match WhiteSpace "\s\+$" containedin=ALL conceal cchar=◦
+"set conceallevel=2 
+"set concealcursor=nv
+"highlight Conceal ctermfg=black
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+"""Vundle related things
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'hdima/python-syntax'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-surround'
+Plugin 'chrisbra/vim-autosave'
+Plugin 'haya14busa/incsearch.vim' 
+Plugin 'xuhdev/vim-latex-live-preview'
+Plugin 'exvim/ex-searchcompl'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'luochen1990/rainbow'
+Plugin 'kien/ctrlp.vim'
+"Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+"Plugin 'lervag/vimtex'
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'roxma/nvim-yarp'
+"Plug 'roxma/vim-hug-neovim-rpc'"
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"""Vim-plug setting 
+"call plug#begin('~/.vim/plugged')
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"call plug#end()
+
+" End of Vundle related things
+" Python related formatting
+let python_highlight_all=1
+set statusline+=%#warningmsg# " For Syntastic
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" For Syntastic 
+let g:syntastic_python_checkers = ['pyflakes_with_warnings']
+"let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:flake8_show_in_file=1  " show
+"let g:syntastic_tex_checkers = ['lacheck']
+let g:syntastic_tex_checkers = ['']
+
+" For Jedi Vim
+let g:jedi#show_call_signatures = "2"
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#auto_vim_configuration = 1
+let g:jedi#auto_initialization = 1
+
+"""For deoplete
+let g:deoplete#enable_at_startup = 0
+
+"""For AutoSave
+let g:auto_save = 1  " enable AutoSave on Vim startup
+
+"""For vim-airline 
+set laststatus=2
+set ttimeoutlen=50
+
+"""For rainbow paranthesis
+let g:rainbow_active = 1
+
+"colorscheme seoul256
+"colorscheme zenburn
+"colorscheme solarized
+colorscheme gruvbox
+"colorscheme obsidian
+"colorscheme jellybeans
+"colorscheme 256-grayvim
+"colorscheme 256_noir
+"colorscheme Monakai
+"colorscheme PaperColor
+
+
+"let g:solarized_termcolors=256
+"let g:solarized_visibility=256
+set background=dark
+let g:seoul256_background = 234
+set t_Co=256
+
+"highlight link SyntasticError SpellBad
+"highlight link SyntasticWarning SpellCap
+hi SpellBad ctermfg=125 ctermbg=136 guifg=#af0000 guibg=#00005f
+hi SpellCap ctermfg=126 ctermbg=135 guifg=#af005f guibg=#00005f
+
+syntax on
+syntax enable
+
+set cursorline
+set completeopt-=preview
+set modeline
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set softtabstop=4 
+set ai
+set showmatch
+"call togglebg#map("<F5>")
+
+noremap pumvisible() ? "\" : " "
+
+"""For Taejin's preference
+nnoremap <c-s> :w<CR> # normal mode: save
+inoremap <c-s> <Esc>:w<CR>l # insert mode: escape to normal and save
+vnoremap <c-s> <Esc>:w<CR> # visual mode: escape to normal and save
+
+""" Cursor moves through lines 
+nnoremap j gj
+nnoremap k gk
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+""" For vim-latex-live-preview
+let g:livepreview_previewer = 'evince'
+let g:vimtex_disable_version_warning=1
+let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:livepreview_engine = 'pdflatex'
+"let g:livepreview_engine = 'pdflatex'
+
+""" Spell check (VIM 7) 
+"""set spell spelllang=en_us
+"""Short Cuts
+
+"""NERDtree settings (To start vim with NERDtree)
+"autocmd vimenter * NERDTree
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+""" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+set incsearch
+set hlsearch
+
+
+"" The Red Tab in black
+":highlight ExtraWhitespace ctermbg=#000000 guibg=#000000
+:highlight ExtraWhitespace ctermfg=16 guifg=#000000 "rgb=0,0,0
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+"highlight ExtraWhitespace ctermbg=black guibg=black
+"match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd BufWinLeave * call clearmatches()
+
+"set list
+"set listchars+=trail:◦
+let @d = 'i ipdb.set_trace()'
+"let @w = 'i def read_and_write(w_path, list_to_wr):\n\twith open(w_path, "w") as output:\t\tfor k, val in enumerate(list_to_wr):\t\t\toutput.write(' '.join(val))\t\treturn None'
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
+
+""" vim airline
+" air-line
+"let g:airline_powerline_fonts = 1
+
+"if !exists('g:airline_symbols')
+    "let g:airline_symbols = {}
+"endif
+
+" unicode symbols
+"let g:airline_left_sep = '»'
+"let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '«'
+"let g:airline_right_sep = '◀'
+"let g:airline_symbols.linenr = '␊'
+"let g:airline_symbols.linenr = '␤'
+"let g:airline_symbols.linenr = '¶'
+"let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'Þ'
+"let g:airline_symbols.paste = '∥'
+"let g:airline_symbols.whitespace = 'Ξ'
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+set encoding=utf-8
+
+set timeout timeoutlen=5000 ttimeoutlen=100
+" ne numbers on
+""""""""""""""""""" Relative line number 
+set nu
+""""""""""""""""""" Relative line number  END
+"
