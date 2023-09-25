@@ -177,7 +177,7 @@ CUDA_VER="cuda-11.8"
 export PATH=/usr/local/$CUDA_VER/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/$CUDA_VER/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-#export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
 #export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 export PATH="$PATH:/home/taejinp/ngc/"
@@ -244,6 +244,7 @@ export METIS_DLL=/usr/local/lib/libmetis.dylib
 
 export PATH="$PATH:/home/taejinp/ngc"
 export PATH="$PATH:/home/taejinp/Downloads/ngc-cli"
+export PATH="$PATH:/home/taejinp/Downloads/ngc/ngc-cli"
 
 ### <<< End of Kaldi
 
@@ -262,15 +263,17 @@ export TERM="screen-256color"
 
 
 #TIME='\033[02;96m\]\t \033[01;32m\]'
+TIME='\033[02;96m\]\033[01;32m\]'
+#USER=$USER;
 #USER='\033[02;32m\]$(USER) \033[01;34m\]'
 #HOST='\033[01;31m\]\h\033[00;54m\]';
+HOST='\033[01;96m\]\h\033[00;54m\]';
 #LOCATION=' \033[01;39m\]`pwd | sed "s#\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\).*\(/[^/]\{1,\}/[^/]\{1,\}\)/\{0,1\}#\1_\2#g"`\033[01;39m\]'
-TIME='\033[02;96m\]\033[01;32m\]'
-USER=$USER;
-HOST='\033[01;92m\]\h\033[00;54m\]';
 LOCATION=':\033[00;39m\]\w \033[01;39m\]'
 BRANCH='\033[00;33m\]$(git_id) \033[02;36m\]$(git_branch)\[\033[00m\]\n\$ '
+#PS1=$TIME$USER$HOST$LOCATION$BRANCH
 PS1=$TIME$USER'\033[00;39m\]@\033[00m\]'$HOST$LOCATION$BRANCH
+#PS1=$USER'\033[00;39m\]@\033[00m\]'$HOST$LOCATION$BRANCH
 PS2='\n\$\[\033[01;36m\]$>'
 ls --color=al > /dev/null 2>&1 && alias lsc='ls -F --color=al' || alias lsc='ls -G'
 
@@ -280,6 +283,10 @@ watch -n60 `ngc batch list`
 function nvkill() {
 nvidia-smi | grep 'python' | awk '{ print $5 }' | xargs -n1 kill -9
 }
+function pykill() {
+pkill -9 python
+}
+
 function nvkill_args() {
 nvidia-smi | grep 'python' | awk '{ print $5 }'
  }
@@ -300,7 +307,10 @@ function jnb() {
 jupyter notebook --no-browser --port=$1
 }
 function cnv() {
-source ~/.bash_profile; conda activate $1
+#source ~/.bash_profile; conda activate $1
+# source ~/.bash_profile; 
+conda activate $1
+#export PYTHONPATH="$PYTHONPATH:/home/taejinp/anaconda3/envs/$1/bin"
 }
 function msh() {
 mosh taejinp@10.110."$1"
@@ -334,6 +344,10 @@ mkdir -p /nemo_asr_eval
 ngc workspace mount nemo_asr_eval /nemo_asr_eval --mode RW 
 }
 
+function scr() {
+sudo chmod -R 777 ./*
+}
+
 function ngct() {
 cd /ws/train_scripts
 }
@@ -342,5 +356,16 @@ cd ~/projects/data_scripts/msdd_train/ngc_scripts
 }
 
 
-export PATH="$PATH:/home/taejinp/Downloads/ngc/ngc-cli"
-export PATH="/opt/homebrew/bin:$PATH"
+## source it from ~/.bashrc or ~/.bash_profile ##
+echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
+ 
+## Another example Check and load it from ~/.bashrc or ~/.bash_profile ##
+grep -wq '^source /etc/profile.d/bash_completion.sh' ~/.bashrc || echo 'source /etc/profile.d/bash_completion.sh'>>~/.bashrc
+
+## blesh
+source ~/projects/blesh/ble.sh/out/ble.sh
+ble-face -s auto_complete fg=242,bg=black
+ble-face -s command_directory fg=45,bg=black
+ble-face -s filename_directory fg=33,bg=black
+ble-face -s command_alias fg=teal,bg=black
+
