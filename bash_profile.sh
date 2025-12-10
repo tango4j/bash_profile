@@ -20,6 +20,10 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# Compiler version 
+export CXX=g++-9
+export CC=gcc-9
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -86,7 +90,6 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -94,10 +97,29 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # taejinp's custom alias
+alias ocid3='ssh draco-oci-dc-03.draco-oci-iad.nvidia.com'
+alias ocics='ssh cs-oci-ord'
+alias drc='ssh draco-rno-login-0001'
+alias drc1='ssh draco-rno-login-0001'
+alias drc2='ssh draco-rno-login-0002'
+alias ocid3='ssh draco-oci-dc-03'
+alias ocid2='ssh draco-oci-dc-02'
+alias ocid1='ssh draco-oci-dc-01'
+alias ocics='ssh cs-oci-ord'
+alias ocics1='ssh cs-oci-ord-01'
+alias ocics2='ssh cs-oci-ord-02'
+alias ocics3='ssh cs-oci-ord-03'
+alias ocicsdc1='ssh  cs-oci-ord-dc-01'
+alias ocicsdc2='ssh  cs-oci-ord-dc-02'
+alias ocicsdc3='ssh  cs-oci-ord-dc-03'
+alias ocicsdc4='ssh  cs-oci-ord-dc-04'
+
+#alias drc='ssh draco-rno-login' 
+alias drc='ssh taejinp@draco-rno-login-0001.draco-rno.nvidia.com'
 alias bb='source ~/.bash_profile'
 alias be='vim ~/.bash_profile'
 alias ve='vim ~/.vimrc'
-alias gpusee='watch --color -n 0.1 "gpustat --color"'
+alias gpusee='watch --color -n 0.01 "gpustat --color"'
 alias nemo='cd ~/projects/NeMo; conda activate env04;clear'
 alias cde='conda deactivate'
 alias asr_nemo='cd ~/projects/git_clones/NeMo/examples/asr; conda activate env04;clear'
@@ -107,6 +129,9 @@ alias env03='source ~/.bash_profile;conda activate env03'
 alias env04='source ~/.bash_profile;conda activate env04'
 alias t01='source ~/.bash_profile;conda activate t01'
 alias nvd='mosh taejinp@10.110.41.21'
+alias nvk='ssh lab@10.110.43.27'
+alias nvw='ssh lab@10.110.43.39'
+alias nvb='mosh taejinp@10.110.40.120'
 alias jgd='ssh lab@10.110.41.23'
 
 
@@ -114,8 +139,7 @@ alias envtf04='source ~/.bash_profile;conda activate envtf04'
 alias pytt='cd ~/projects/pytorch-tutorial/tutorials/01-basics/feedforward_neural_network'
 alias ndt='cd ~/projects/NeMo/examples/speaker_recognition/'  # NeMo Diar Test
 alias nemo_spkutils='cd ~/projects/NeMo/nemo/collections/asr/parts/utils'
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+
 alias stfx='python setup.py style --fix --scope=nemo'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias stylefix='python ~/projects/NeMo/setup.py style --fix'
@@ -131,14 +155,25 @@ alias godiar='cd ~/projects/run_time/;env04'
 alias runt='cd ~/projects/run_time/'
 alias tvd='cd ~/projects/run_time/; conda activate rnnt01'
 alias tsvad='cd ~/projects/ts_vad_diar/NeMo/;conda activate rnnt01'
-print_script_a="script -q -c 'cat print_script.sh' /dev/null"
-print_script_b="script -q -c 'cat print_script.sh | tail -12' /dev/null"
-print_script_c="script -q -c 'cat print_script.sh | tail -7' /dev/null"
+alias sfs='cd ~/projects/sortformer_script/diar_sortformer/local_machine_scripts'
+alias de2e='cd /gpfs/fs1/projects/ent_aiapps/datasets/data/diarization_e2e'
+print_script_a="script -q -c 'cat print_script_0.sh'"
+print_script_c="script -q -c 'cat print_script_0.sh | tail -7' /dev/null"
+print_script_b="script -q -c 'cat print_script_0.sh | tail -12' /dev/null"
+print_script_d="script -q -c 'cat print_script_0.sh | tail -24' /dev/null"
+print_script_e="script -q -c 'cat print_script_0.sh | tail -50' /dev/null"
 #alias print_script="script -q -c 'bash print_script.sh' /dev/null"
-alias transa='watch  -n 0.1 --color "$print_script_a"'
+alias transa='watch  -t -n 0.1 --color "$print_script_a"'
 alias transb='watch  -n 0.1 --color "$print_script_b"'
 alias transc='watch  -n 0.1 --color "$print_script_c"'
+alias transd='watch  -n 0.1 --color "$print_script_d"'
+alias transe='watch  -n 0.1 --color "$print_script_e"'
+alias mdsf='cd /disk_a/models/sortformer_diarization/'
 alias chs='cd /home/taejinp/projects/chooper_scripts'
+alias lms='cd /home/taejinp/projects/diar_sortformer/diar_sortformer/local_machine_scripts'
+alias lms0='cd /home/taejinp/projects/do_not_use_script_diar_sortformer/diar_sortformer/local_machine_scripts'
+alias dms='cd /home/taejinp/projects/data_scripts'
+alias kdm='ssh lab@10.110.43.27'
 
 alias moshkill='kill `pidof mosh-server`'
 #alias trans_d='watch  -n 0.1 --color "$print_script_c"'
@@ -165,16 +200,21 @@ if ! shopt -oq posix; then
 fi
 
 #Anaconda
-export PATH=~/anaconda3/bin:$PATH
+export LD_LIBRARY_PATH=""
+export PATH=~/anaconda3/bin:/bin:/usr/bin:$PATH
 
-CUDA_VER="cuda-11.8"
+#CUDA_VER="cuda-11.8"
+CUDA_VER="cuda-12.1"
+#CUDA_VER="cuda-12.3"
 export PATH=/usr/local/$CUDA_VER/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/$CUDA_VER/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+#export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/$CUDA_VER/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH="/usr/local/$CUDA_VER/lib64:$LD_LIBRARY_PATH"
+#export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
 
 #export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
 #export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-export PATH="$PATH:/home/taejinp/ngc/"
+export PATH="$PATH:/home/taejinp/ngc-cli"
 export PATH="$PATH:/home/taejinp/.local/bin"
 
 
@@ -183,39 +223,39 @@ export KENLM_ROOT="/home/taejinp/projects"
 
 ### This is for sm_86 support for Ampere GPUs (A5000, RTX3090, etc)
 TORCH_CUDA_ARCH_LIST="8.6"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_mod"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_mod"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_edit"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_edit/data"
+#export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_mod"
+#export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_mod"
+#export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_edit"
+#export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python3.6/dist-packages/torchtext_edit/data"
 export torchtext_mod="/usr/local/lib/python3.6/dist-packages/torchtext_mod"
 
 ### <<< Start of Kaldi
 export KALDI_ROOT="/home/taejinp/kaldi":$PATH
 # Kaldi export (added by inctrl)
-export PATH=/home/taejinp/kaldi/src/featbin/:$PATH
-export PATH=/home/taejinp/kaldi/src/bin/:$PATH
-export PATH=/home/taejinp/kaldi/src/fstbin:$PATH
-export PATH=/home/taejinp/kaldi/src/ivectorbin:$PATH
+#export PATH=/home/taejinp/kaldi/src/featbin/:$PATH
+#export PATH=/home/taejinp/kaldi/src/bin/:$PATH
+#export PATH=/home/taejinp/kaldi/src/fstbin:$PATH
+#export PATH=/home/taejinp/kaldi/src/ivectorbin:$PATH
 
-export PATH=/home/taejinp/kaldi/egs/callhome_diarization/xvec/utils:$PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/featbin:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/bin:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/fstbin:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/ivectorbin/:$LD_LIBRARY_PATH
+#export PATH=/home/taejinp/kaldi/egs/callhome_diarization/xvec/utils:$PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/featbin:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/bin:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/fstbin:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/ivectorbin/:$LD_LIBRARY_PATH
 
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/tools/openfst-1.6.2/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/tools/openfst-1.6.2/src/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/fstbin/fstaddselfloops:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/tools/openfst-1.6.2/lib:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/tools/openfst-1.6.2/src/lib:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/home/taejinp/kaldi/src/fstbin/fstaddselfloops:$LD_LIBRARY_PATH
 
 
 export KALDI_ROOT="/home/taejinp/kaldi":$PATH
-export PATH=/home/taejinp/Downloads/Kaldi-master/tools/sph2pipe_v2.5/:$PATH
-export PATH=/home/taejinp/kaldi/tools/sph2pipe_v2.5/:$PATH
-export PATH=/usr/local/cuda/bin:$PATH
-export PATH=/usr/local/cuda/lib64:$PATH
-export CUDA_INC_DIR=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+#export PATH=/home/taejinp/Downloads/Kaldi-master/tools/sph2pipe_v2.5/:$PATH
+#export PATH=/home/taejinp/kaldi/tools/sph2pipe_v2.5/:$PATH
+export PATH=/usr/local/$CUDA_VER/bin:$PATH
+export PATH=/usr/local/$CUDA_VER/lib64:$PATH
+#export CUDA_INC_DIR=/usr/local/$CUDA_VER/lib64:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/usr/local/$CUDA_VER/lib64:$LD_LIBRARY_PATH
 export PATH=/usr/local/lib:$PATH
 export PATH=.:$PATH
 export WITH_METIS=1
@@ -251,10 +291,17 @@ PS1=$TIME$USER'\033[00;39m\]@\033[00m\]'$HOST$LOCATION$BRANCH
 PS2='\n\$\[\033[01;36m\]$>'
 ls --color=al > /dev/null 2>&1 && alias lsc='ls -F --color=al' || alias lsc='ls -G'
 
-export PATH="$PATH:/home/taejinp/ngc"
+#export PATH="$PATH:/home/taejinp/ngc"
+#export PATH="$PATH:/home/taejinp/ngc-cli"
 function nvkill() {
 nvidia-smi | grep 'python' | awk '{ print $5 }' | xargs -n1 kill -9
 }
+
+function wandbkill() {
+    pgrep -f wandb | xargs -n1 kill -9
+}
+
+
 function nvkill_args() {
 nvidia-smi | grep 'python' | awk '{ print $5 }'
  }
@@ -303,6 +350,9 @@ find $(pwd /) -name "$1"
 function conac () {
 conda activate $1
 }
+function myip() {
+hostname -I | awk '{print $1}'
+}  
 function pykill () {
 pkill -9 python
 }
@@ -312,6 +362,95 @@ ngc workspace mount nemo_asr_eval /nemo_asr_eval --mode RW
 }
 function pie() {
 pip install --editable ".[all]"
+}
+function jnb() {
+jupyter notebook --no-browser --port=$1
+}
+
+function cnvd() {
+conda activate $1
+conda deactivate
+conda deactivate
+conda activate $1
+}
+function cnde() {
+conda deactivate
+}
+function cnv() {
+conda activate $1
+}
+function cdd() {
+cd "$(dirname $1)"
+}
+function trc() {
+SCR="script -q -c 'cat print_script_${1}.sh' /dev/null"; watch  -n 0.1 --color "$SCR"
+}
+function fpth() {
+find $PWD/$1*
+}
+function rdl() {
+readlink -e $1
+}
+function transn() {
+print_script_comm="script -q -c 'cat print_script.sh | tail -$1' /dev/null"
+watch  -n 0.1 --color "$print_script_comm"
+}
+
+function ezcp() {
+echo "rsync -rv lab@10.110.43.14:$PWD"
+echo "PW: labuser06052021"
+}
+
+function allwav() {
+    find . -type f -name "*.wav"
+}
+
+function fisher_d() {
+cd /disk_a_nvd/datasets/Fisher
+}
+
+function s3ls () {
+aws s3 ls --endpoint=https://pdx.s8k.io 
+}
+
+function s3fr() {
+aws s3 --endpoint=https://pdx.s8k.io ls s3://"$1" --recursive
+}
+
+function alldiff(){
+ git diff --name-only main...
+}
+
+function s3fc() {
+aws s3 --endpoint=https://pdx.s8k.io ls s3://"$1" 
+}
+
+function s3cp() {
+aws s3 --endpoint=https://pdx.s8k.io cp "$1" s3://"$2" --recursive
+}
+
+function s3mb() {
+aws s3 --endpoint=https://pdx.s8k.io mb s3://"$1"
+}
+function s3mv() {
+aws s3 mv s3://"$1" s3://"$2" --recursive --endpoint=https://pdx.s8k.io
+}
+
+function s3rm() {
+aws s3 --endpoint=https://pdx.s8k.io rm s3://"$1" --recursive
+}
+
+function s3rmc() {
+aws s3 --endpoint=https://pdx.s8k.io rm s3://"$1" 
+}
+
+function killtrans() {
+ps aux | grep "print_script" | awk '{print $2}' | xargs kill -9
+}
+
+
+function kvd() {
+ssh lab@10.110.43.27
 }
 
 # >>> conda initialize >>>
@@ -330,3 +469,9 @@ unset __conda_setup
 source ~/anaconda3/etc/profile.d/conda.sh
  #<<< conda initialize <<<
 
+source ~/.local/share/blesh/ble.sh
+
+export PATH="/usr/local/go/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
