@@ -98,15 +98,13 @@ alias l='ls -CF'
 
 # taejinp's custom alias
 alias ocid3='ssh draco-oci-dc-03.draco-oci-iad.nvidia.com'
-alias ocid2='ssh draco-oci-dc-02.draco-oci-iad.nvidia.com'
-alias ocid1='ssh draco-oci-dc-01.draco-oci-iad.nvidia.com'
 alias ocics='ssh cs-oci-ord'
 alias drc='ssh draco-rno-login-0001'
 alias drc1='ssh draco-rno-login-0001'
 alias drc2='ssh draco-rno-login-0002'
-alias droc3='ssh draco-oci-dc-03'
-alias droc2='ssh draco-oci-dc-02'
-alias droc1='ssh draco-oci-dc-01'
+alias ocid3='ssh draco-oci-dc-03'
+alias ocid2='ssh draco-oci-dc-02'
+alias ocid1='ssh draco-oci-dc-01'
 alias ocics='ssh cs-oci-ord'
 alias ocics1='ssh cs-oci-ord-01'
 alias ocics2='ssh cs-oci-ord-02'
@@ -115,7 +113,6 @@ alias ocicsdc1='ssh  cs-oci-ord-dc-01'
 alias ocicsdc2='ssh  cs-oci-ord-dc-02'
 alias ocicsdc3='ssh  cs-oci-ord-dc-03'
 alias ocicsdc4='ssh  cs-oci-ord-dc-04'
-alias mbm='ssh taejinp@my-blackwell-machine'
 
 #alias drc='ssh draco-rno-login' 
 alias drc='ssh taejinp@draco-rno-login-0001.draco-rno.nvidia.com'
@@ -133,10 +130,6 @@ alias env04='source ~/.bash_profile;conda activate env04'
 alias t01='source ~/.bash_profile;conda activate t01'
 alias nvd='mosh taejinp@10.110.41.21'
 alias nvk='ssh lab@10.110.43.27'
-alias nvw='ssh lab@10.110.43.39'
-alias nvj='ssh taejinp@10.110.73.200'
-alias nvspk='ssh taejinp@10.110.73.60'
-alias kdspk='ssh lab@10.110.42.157'
 alias nvw='ssh lab@10.110.43.39'
 alias nvb='mosh taejinp@10.110.40.120'
 alias jgd='ssh lab@10.110.41.23'
@@ -175,12 +168,10 @@ alias transb='watch  -n 0.1 --color "$print_script_b"'
 alias transc='watch  -n 0.1 --color "$print_script_c"'
 alias transd='watch  -n 0.1 --color "$print_script_d"'
 alias transe='watch  -n 0.1 --color "$print_script_e"'
-alias dyn='ssh lab@aiapps-041624.dyn.nvidia.com'
 alias mdsf='cd /disk_a/models/sortformer_diarization/'
 alias chs='cd /home/taejinp/projects/chooper_scripts'
 alias lms='cd /home/taejinp/projects/diar_sortformer/diar_sortformer/local_machine_scripts'
 alias lms0='cd /home/taejinp/projects/do_not_use_script_diar_sortformer/diar_sortformer/local_machine_scripts'
-alias rtasr='cd /home/taejinp/projects/diar_sortformer/diar_sortformer/rich_transcription_asr/'
 alias dms='cd /home/taejinp/projects/data_scripts'
 alias kdm='ssh lab@10.110.43.27'
 
@@ -213,9 +204,8 @@ export LD_LIBRARY_PATH=""
 export PATH=~/anaconda3/bin:/bin:/usr/bin:$PATH
 
 #CUDA_VER="cuda-11.8"
-#CUDA_VER="cuda-12.1"
-CUDA_VER="cuda-12.3"
-#CUDA_VER="cuda-13.1"
+CUDA_VER="cuda-12.1"
+#CUDA_VER="cuda-12.3"
 export PATH=/usr/local/$CUDA_VER/bin${PATH:+:${PATH}}
 #export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/$CUDA_VER/lib64:/usr/lib/x86_64-linux-gnu:/usr/local/lib/openmpi:/opt/OpenBLAS/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export LD_LIBRARY_PATH="/usr/local/$CUDA_VER/lib64:$LD_LIBRARY_PATH"
@@ -272,11 +262,6 @@ export WITH_METIS=1
 export METIS_DLL=/usr/local/lib/libmetis.dylib
 
 ### <<< End of Kaldi
-
-export AIS_ENDPOINT=http://asr.iad.oci.aistore.nvidia.com:51080
-export AIS_AUTHN_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwaXJlcyI6IjIwNDUtMTAtMTJUMTc6MjU6NTAuNzIzNjUyNzE3WiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.Tl_Qorw36ejescLxzpILiJcP674JUDW-gDzrwfk5kyk"
-export AIS_CLIENT_CA=/lustre/fsw/portfolios/llmservice/users/aawilson/ord-ca.crt
-
 
 # For torchtext_mod
 
@@ -467,12 +452,6 @@ ps aux | grep "print_script" | awk '{print $2}' | xargs kill -9
 function kvd() {
 ssh lab@10.110.43.27
 }
-
-function vllmkill() {
-pkill -f VLLM
-kill -9 $(lsof -ti :8000)
-}
-
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
